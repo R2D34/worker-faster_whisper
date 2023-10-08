@@ -1,5 +1,5 @@
 # Use specific version of nvidia cuda image
-FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
 
 # Set shell and noninteractive environment variables
 ENV DEBIAN_FRONTEND=noninteractive
