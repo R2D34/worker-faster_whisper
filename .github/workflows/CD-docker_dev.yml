@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Downscale repository name and save as REPO_NAME env var
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -28,4 +31,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+            ghcr.io/${{ env.REPO_NAME }}/${{ github.event.repository.name }}:latest
