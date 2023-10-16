@@ -1,5 +1,6 @@
 
 
+import os
 import sys
 import time
 from faster_whisper import WhisperModel
@@ -16,9 +17,15 @@ if __name__ == "__main__":
         print("Usage: python3 whisper_runner.py <file_name> <current_batching>")
         sys.exit(1)
 
-
+    
+    
     #Start counting execution time with time 
     scenario = f"small--batch-{sys.argv[2]}--file-{sys.argv[1]}"
+
+    path = os.path.join("logs", scenario)
+    #Make sure path directories exist
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    
     with open(f"logs/{scenario}", "w") as f:
 
         
