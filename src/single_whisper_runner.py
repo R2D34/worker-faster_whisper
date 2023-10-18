@@ -22,9 +22,11 @@ if __name__ == "__main__":
     #Start counting execution time with time 
     scenario = f"small--batch-{sys.argv[2]}--file-{sys.argv[1]}"
 
-    path = os.path.join("logs", scenario)
+    logs_path = os.path.join("logs", scenario)
+    results_path = os.path.join("results", scenario)
     #Make sure path directories exist
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    os.makedirs(os.path.dirname(logs_path), exist_ok=True)
+    os.makedirs(os.path.dirname(results_path), exist_ok=True)
     
     with open(f"logs/{scenario}", "w") as f:
 
@@ -50,13 +52,13 @@ if __name__ == "__main__":
                     "small",
                     device="cuda" if rp_cuda.is_available() else "cpu",
                     compute_type="float16" if rp_cuda.is_available() else "int8")
-        whisper_results = model.transcribe(audio_input, model_name="small",
-            )
+        whisper_results = model.transcribe(audio_input)
         with open(f"results/{scenario}", "w") as rf:
 
             for result in whisper_results:
                 print(result)
-                rf.write(result + "--")
+                rf.write(result)
+                rf.write("\n")
                     # Calculate elapsed time in seconds
         end_time = time.time()
         elapsed_seconds = end_time - start_time
